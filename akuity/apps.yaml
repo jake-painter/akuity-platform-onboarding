@@ -24,7 +24,7 @@ spec:
     spec:
       project: default
       source:
-        repoURL: https://github.com/<repo>
+        repoURL: https://github.com/jake-painter/akuity-platform-onboarding
         targetRevision: env/{{env}}
         path: .
       destination:
