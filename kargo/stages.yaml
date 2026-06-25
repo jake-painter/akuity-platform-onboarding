@@ -168,14 +168,23 @@ spec:
         config:
           path: ./out
           message: ${{ outputs['update-image'].commitMessage }}
-      - uses: git-push
+      - uses: git-push  # change: added a PR gate into env/prod instead of pushing directly
+        as: push
         config:
           path: ./out
+          generateTargetBranch: true
+      - uses: git-open-pr
+        as: open-pr
+        config:
+          repoURL: ${{ vars.gitRepo }}
+          sourceBranch: ${{ outputs.push.branch }}
           targetBranch: env/prod
-      - uses: argocd-update
+      - uses: git-wait-for-pr
+        as: wait-for-pr
+        config:
+          repoURL: ${{ vars.gitRepo }}
+          prNumber: ${{ outputs['open-pr'].pr.id }}
+      - uses: argocd-update  # change: dropped sources to avoid pinning a SHA the PR merge won't produce
         config:
           apps:
           - name: guestbook-simple-prod
-            sources:
-            - repoURL: ${{ vars.gitRepo }}
-              desiredRevision: ${{ outputs.commit.commit }}

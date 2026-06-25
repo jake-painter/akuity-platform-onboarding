@@ -4,3 +4,16 @@ metadata:
   name: kargo-simple
   annotations:
     argocd.argoproj.io/sync-wave: "-1"
+---
+apiVersion: kargo.akuity.io/v1alpha1
+kind: ProjectConfig
+metadata:
+  name: kargo-simple        # must match the Project name
+  namespace: kargo-simple
+  annotations:
+    argocd.argoproj.io/sync-wave: "-1"
+spec:
+  promotionPolicies:
+  - stageSelector:
+      name: dev
+    autoPromotionEnabled: true
