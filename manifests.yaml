@@ -20,7 +20,7 @@ spec:
         app: guestbook-simple
     spec:
       containers:
-      - image: ghcr.io/jake-painter/guestbook:v0.0.6
+      - image: ghcr.io/jake-painter/guestbook:v0.0.7
         name: guestbook-simple
         ports:
         - containerPort: 3000
