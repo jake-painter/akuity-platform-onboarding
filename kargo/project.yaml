@@ -5,10 +5,11 @@ metadata:
   annotations:
     argocd.argoproj.io/sync-wave: "-1"
 ---
+# Enable Auto Promotion of Freight to Dev Stage
 apiVersion: kargo.akuity.io/v1alpha1
 kind: ProjectConfig
 metadata:
-  name: kargo-simple        # must match the Project name
+  name: kargo-simple
   namespace: kargo-simple
   annotations:
     argocd.argoproj.io/sync-wave: "-1"

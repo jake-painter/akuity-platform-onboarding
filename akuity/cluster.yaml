@@ -6,3 +6,4 @@ spec:
   description: "Kargo Quickstart K8S Cluster"
   data:
     size: small
+    multiClusterK8sDashboardEnabled: true   # enable Akuity Intelligence on this cluster

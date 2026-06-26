@@ -4,5 +4,6 @@ metadata:
   name: my-argocd-instance
 spec:
   description: "Argo CD Instance for Kargo Quickstart"
-  instanceSpec: {}
-  version: v2.10.9
+  instanceSpec:
+    assistantExtensionEnabled: true   # enable Akuity Intelligence (AI assistant)
+  version: v3.4.3-ak.92
