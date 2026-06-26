@@ -76,7 +76,7 @@ In the same instance spec, `kubeVisionConfig.cveScanConfig` scans the container 
  
 - **Single cluster:** `dev`, `staging`, and `prod` are namespaces on one cluster (`kargo-quickstart`), not separate clusters. Promotion moves a release across namespaces, not across cluster boundaries.
 - **`env/prod` already exists:** the prod stage opens a pull request against `env/prod`, so that branch has to be present as the merge target. The stage does not create it.
-- **The prod gate's strength depends on branch protection:** Kargo waits for the pull request to merge, but it does not decide who may merge or whether a review happened. Enforcing real human review requires branch protection configured on `env/prod`, which is a GitHub ruleset that can be added in your repo Settings under the Branches section. Instructions for that setup can be found here: [Bonus: Enforcing the prod gate with a branch ruleset in GitHub](#bonus-enforcing-the-prod-gate-with-a-branch-ruleset-in-github).
+- **The prod gate's strength depends on branch protection:** Kargo waits for the pull request to merge, but it does not decide who may merge or whether a review happened. Enforcing real human review requires branch protection configured on `env/prod`, which is a GitHub ruleset that can be added in your repo Settings under the Rules section. Instructions for that setup can be found here: [Bonus: Enforcing the prod gate with a branch ruleset in GitHub](#bonus-enforcing-the-prod-gate-with-a-branch-ruleset-in-github).
 - **The image is public:** the `Warehouse` polls `ghcr.io/jake-painter/guestbook` with no registry credentials, which assumes the package stays publicly readable.
 - **The Akuity agent meets the CVE-scan minimum:** image scanning requires agent v0.5.49+, and this cluster runs a current agent, so the feature is available.
 
@@ -94,7 +94,9 @@ Akuity Intelligence supports Bring Your Own Key, pointing the assistant at your 
 - **Freedom to use the latest models:** reaching any newly released or alternative model the default catalog doesn't include, simply by adding a provider key.
 
 ## Bonus: Enforcing the prod gate with a branch ruleset in GitHub
- 
+
+NOTE: Only set this up if you have another GitHub user account to use as an authorized approver, as your own commits will not be allowed to be approved by you.
+
 1. In the GitHub repository, go to **Settings** > **Rules** > **Rulesets** > **New ruleset** > **New branch ruleset**.
 2. Name it (for example, `protect-env-prod`) and set **Enforcement status** to **Active**. The *Evaluate* status only logs hits, it does not block.
 3. Under **Target branches**, choose **Add target** > **Include by pattern** and enter `env/prod`.
