@@ -14,7 +14,13 @@ Ultimately, you will have a Kubernetes cluster, with Applications deployed using
 
 Extends the base quickstart template into a more production-shaped delivery pipeline.
 
-In base, you manually "promote" for every environment in Kargo. This implementation adds promotion governance: a new image deploys to dev automatically, staging is promoted on a deliberate QA decision, and prod requires a reviewed, merged pull request. It also enables Akuity Intelligence declaratively, running a current Argo CD release with CVE scanning turned on.
+In base, you manually "promote" for every environment in Kargo. This implementation adds promotion governance via:
+
+-  a new image is discovered by the Warehouse on its default 5-minute poll, becomes Freight, and deploys to dev automatically.
+-  staging is promoted on a deliberate QA decision.
+-  prod requires a reviewed, merged pull request. 
+
+It also enables Akuity Intelligence declaratively, running a current Argo CD release with CVE scanning turned on.
 
 ## Setup & Overall Design
 
