@@ -92,7 +92,9 @@ Akuity Intelligence supports Bring Your Own Key, pointing the assistant at your 
 - **Freedom to use the latest models:** reaching any newly released or alternative model the default catalog doesn't include, simply by adding a provider key.
 
 ## Bonus: Enforcing the prod gate with a branch ruleset in GitHub
- 
+
+NOTE: Only set this up if you have another GitHub user account to use as an authorized approver, as your own commits will not be allowed to be approved by you.
+
 1. In the GitHub repository, go to **Settings** > **Rules** > **Rulesets** > **New ruleset** > **New branch ruleset**.
 2. Name it (for example, `protect-env-prod`) and set **Enforcement status** to **Active**. The *Evaluate* status only logs hits, it does not block.
 3. Under **Target branches**, choose **Add target** > **Include by pattern** and enter `env/prod`.
