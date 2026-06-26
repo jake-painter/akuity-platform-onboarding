@@ -5,5 +5,13 @@ metadata:
 spec:
   description: "Argo CD Instance for Kargo Quickstart"
   instanceSpec:
-    assistantExtensionEnabled: true   # enable Akuity Intelligence (AI assistant)
+    akuityIntelligenceExtension:      # enable Akuity Intelligence
+      enabled: true
+      allowedUsernames: ["*"]
+      allowedGroups: ["*"]
+      aiSupportEngineerEnabled: true
+    kubeVisionConfig:                 # enable CVE Scanning 
+      cveScanConfig:
+        scanEnabled: true
+        rescanInterval: "8h"
   version: v3.4.3-ak.92
