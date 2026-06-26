@@ -74,7 +74,7 @@ In the same instance spec, `kubeVisionConfig.cveScanConfig` scans the container 
  
 - **Single cluster:** `dev`, `staging`, and `prod` are namespaces on one cluster (`kargo-quickstart`), not separate clusters. Promotion moves a release across namespaces, not across cluster boundaries.
 - **`env/prod` already exists:** the prod stage opens a pull request against `env/prod`, so that branch has to be present as the merge target. The stage does not create it.
-- **The prod gate's strength depends on branch protection:** Kargo waits for the pull request to merge, but it does not decide who may merge or whether a review happened. Enforcing real human review requires branch protection configured on `env/prod`, which is a GitHub setting and not part of this repo.
+- **The prod gate's strength depends on branch protection:** Kargo waits for the pull request to merge, but it does not decide who may merge or whether a review happened. Enforcing real human review requires branch protection configured on `env/prod`, which is a GitHub ruleset that can be added in your repo Settings under the Branches section. Instructions for that setup can be found here: [Bonus: Enforcing the prod gate with a branch ruleset in GitHub](#bonus-enforcing-the-prod-gate-with-a-branch-ruleset-in-github).
 - **The image is public:** the `Warehouse` polls `ghcr.io/jake-painter/guestbook` with no registry credentials, which assumes the package stays publicly readable.
 - **The Akuity agent meets the CVE-scan minimum:** image scanning requires agent v0.5.49+, and this cluster runs a current agent, so the feature is available.
 
@@ -90,3 +90,14 @@ Akuity Intelligence supports Bring Your Own Key, pointing the assistant at your 
 - **Flexible cost management:** option of billing AI usage to your own provider keys, so spend is owned and capped directly.
 - **Enhanced data privacy and compliance:** keeping all AI traffic inside a private or on-premises model deployment, which matters for organizations with strict privacy or regulatory requirements.
 - **Freedom to use the latest models:** reaching any newly released or alternative model the default catalog doesn't include, simply by adding a provider key.
+
+## Bonus: Enforcing the prod gate with a branch ruleset in GitHub
+ 
+1. In the GitHub repository, go to **Settings** > **Rules** > **Rulesets** > **New ruleset** > **New branch ruleset**.
+2. Name it (for example, `protect-env-prod`) and set **Enforcement status** to **Active**. The *Evaluate* status only logs hits, it does not block.
+3. Under **Target branches**, choose **Add target** > **Include by pattern** and enter `env/prod`.
+4. Under **Branch rules** leave defaults, and enable:
+   - **Require a pull request before merging**, then **Require approvals** with at least **1** required approval.
+   - **Dismiss stale pull request approvals when new commits are pushed**, so a fresh render pushed to the PR re-triggers review.
+   - **Block force pushes** (on by default) and **Restrict deletions**, so the rendered history on `env/prod` cannot be rewritten or dropped.
+5. Leave the **Bypass list** empty, then click **Create**.
