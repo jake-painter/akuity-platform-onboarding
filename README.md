@@ -42,6 +42,8 @@ A new tag pushed to `ghcr.io/jake-painter/guestbook` is picked up by the `Wareho
 
 Every stage runs the same render-and-publish pipeline: clone `main` (the Kustomize source) and the target `env/<stage>` branch → stamp the image tag into that stage's overlay (`kustomize-set-image`) → render it to flat YAML (`kustomize-build`) → commit, push, and point the stage's Argo CD `Application` at the result. The branch is the handoff: Kargo writes rendered manifests to `env/<stage>`, and a matrix `ApplicationSet` keeps one `Application` per stage (`guestbook-simple-<env>`) synced to it.
 
+Beyond promotion, the platform layer is configured the same declarative way. Akuity Intelligence is enabled for cluster-wide metrics and health visibility plus a plain-language agent over live Argo CD and Kargo state, and CVE scanning runs against the images actually deployed. Both are applied from `akuity/`, with the reasoning in Key Design Decisions below.
+
 ## Key Design Decisions & Tradeoffs
 
 **Auto-promote to `dev`, manual everywhere else:**
